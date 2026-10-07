@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
         a { text-decoration: none; color: inherit; }
-        button { font-family: inherit; }
+        button { font-family: inherit; cursor: pointer; }
 
         /* ============ HEADER ============ */
         .site-header {
@@ -31,7 +31,7 @@
             border-bottom: 1px solid #e2e8f0;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 50;
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
         .header-inner {
@@ -51,6 +51,8 @@
             font-size: 1.25rem;
             color: #0f172a;
             letter-spacing: -0.02em;
+            cursor: pointer;
+            user-select: none;
         }
         .logo-icon {
             width: 36px;
@@ -80,6 +82,7 @@
             cursor: pointer;
             background: none;
             border: none;
+            font-family: inherit;
         }
         .nav-link:hover { background: #f1f5f9; color: #0f172a; }
         .nav-link.primary {
@@ -89,19 +92,13 @@
         }
         .nav-link.primary:hover { background: #1e293b; }
 
-        /* Mobile menu toggle */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #0f172a;
-        }
-
         /* ============ MAIN CONTENT ============ */
-        .main-content { flex: 1; width: 100%; }
-
+        .main-content {
+            flex: 1;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
         .page-container {
             max-width: 1280px;
             margin: 0 auto;
@@ -168,14 +165,12 @@
             margin-bottom: 30px;
             font-size: 0.95rem;
         }
-
         .vacancies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
             margin-top: 20px;
         }
-
         .vacancy-card {
             background: #fff;
             border: 1px solid #e2e8f0;
@@ -202,7 +197,6 @@
             transition: opacity 0.25s;
         }
         .vacancy-card:hover::before { opacity: 1; }
-
         .vacancy-icon {
             width: 52px;
             height: 52px;
@@ -215,7 +209,6 @@
         }
         .vacancy-icon.blue { background: #eff6ff; }
         .vacancy-icon.purple { background: #f5f3ff; }
-
         .vacancy-card h3 {
             font-size: 1.25rem;
             font-weight: 700;
@@ -242,7 +235,6 @@
             background: #f1f5f9;
             color: #475569;
         }
-
         .vacancy-footer {
             margin-top: auto;
             display: flex;
@@ -268,6 +260,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            font-family: inherit;
         }
         .apply-btn:hover {
             background: #1e293b;
@@ -360,6 +353,7 @@
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.15s;
+            font-family: inherit;
         }
         .btn-primary:hover { background: #1e293b; }
         .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
@@ -373,6 +367,7 @@
             font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.15s;
+            font-family: inherit;
         }
         .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
 
@@ -410,7 +405,6 @@
             font-size: 0.9rem;
             margin-bottom: 28px;
         }
-
         .alert {
             padding: 12px 16px;
             border-radius: 8px;
@@ -424,7 +418,7 @@
             border: 1px solid #fecaca;
         }
 
-        /* ============ HR DASHBOARD (FULL PAGE) ============ */
+        /* ============ HR DASHBOARD ============ */
         .dashboard-page {
             min-height: 100vh;
             background: #f8fafc;
@@ -448,8 +442,6 @@
             padding: 32px 24px;
             width: 100%;
         }
-
-        /* Stats cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -481,8 +473,6 @@
             color: #94a3b8;
             margin-top: 4px;
         }
-
-        /* Table panel */
         .panel {
             background: #fff;
             border: 1px solid #e2e8f0;
@@ -518,11 +508,11 @@
             background: #fff;
             cursor: pointer;
             width: auto;
+            font-family: inherit;
         }
         .panel-header select:focus { outline: none; border-color: #3b82f6; }
 
         .table-scroll { overflow-x: auto; }
-
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         th {
             text-align: left;
@@ -544,7 +534,6 @@
         }
         tbody tr:hover { background: #f8fafc; }
         tbody tr:last-child td { border-bottom: none; }
-
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -560,7 +549,6 @@
             text-align: center;
             color: #94a3b8;
             font-size: 0.85rem;
-            margin-top: auto;
         }
 
         /* ============ UTILITY ============ */
@@ -583,7 +571,6 @@
             .vacancies-grid { grid-template-columns: 1fr; }
             .hero { padding: 20px 0; }
         }
-
         @media (max-width: 480px) {
             .logo-text { display: none; }
             .nav-link { padding: 6px 8px; font-size: 0.8rem; }
@@ -592,24 +579,24 @@
 </head>
 <body>
 
-    <!-- ================= SITE HEADER ================= -->
+    <!-- ================= HEADER ================= -->
     <header class="site-header">
         <div class="header-inner">
-            <div class="logo" onclick="showView('home')" style="cursor:pointer;">
+            <div class="logo" id="logoBtn">
                 <div class="logo-icon">N</div>
                 <span class="logo-text">Nova Studios</span>
             </div>
             <nav class="header-nav">
-                <button class="nav-link" onclick="showView('home')">Careers</button>
-                <button class="nav-link primary" onclick="showView('login')">HR Log In</button>
+                <button class="nav-link" id="navCareers">Careers</button>
+                <button class="nav-link primary" id="navHRLogin">HR Log In</button>
             </nav>
         </div>
     </header>
 
-    <!-- ================= MAIN CONTENT ================= -->
+    <!-- ================= MAIN ================= -->
     <main class="main-content">
 
-        <!-- ========== HOME / LANDING ========== -->
+        <!-- HOME VIEW -->
         <section id="homeView">
             <div class="page-container">
                 <div class="hero">
@@ -626,7 +613,7 @@
                     <p class="section-subtitle">Choose a role that fits you best and submit your application.</p>
 
                     <div class="vacancies-grid">
-                        <!-- Support Agent Card -->
+                        <!-- Support Agent -->
                         <div class="vacancy-card">
                             <div class="vacancy-icon blue">🎧</div>
                             <h3>Support Agent</h3>
@@ -638,13 +625,13 @@
                             </div>
                             <div class="vacancy-footer">
                                 <span class="vacancy-meta">Full-time • Flexible</span>
-                                <button class="apply-btn" onclick="startApplication('Support Agent')">
+                                <button class="apply-btn" data-role="Support Agent">
                                     Apply Now →
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Moderator Card -->
+                        <!-- Moderator -->
                         <div class="vacancy-card">
                             <div class="vacancy-icon purple">🛡️</div>
                             <h3>Moderator</h3>
@@ -656,7 +643,7 @@
                             </div>
                             <div class="vacancy-footer">
                                 <span class="vacancy-meta">Part-time • Flexible</span>
-                                <button class="apply-btn" onclick="startApplication('Moderator')">
+                                <button class="apply-btn" data-role="Moderator">
                                     Apply Now →
                                 </button>
                             </div>
@@ -666,7 +653,7 @@
             </div>
         </section>
 
-        <!-- ========== APPLICATION FORM ========== -->
+        <!-- APPLICATION VIEW -->
         <section id="applicationView" class="hidden">
             <div class="page-container">
                 <div class="form-wrapper">
@@ -740,7 +727,7 @@
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" class="btn-secondary" onclick="showView('home')">Cancel</button>
+                            <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
                             <button type="submit" class="btn-primary">Submit Application</button>
                         </div>
                     </form>
@@ -748,7 +735,7 @@
             </div>
         </section>
 
-        <!-- ========== HR LOGIN ========== -->
+        <!-- LOGIN VIEW -->
         <section id="loginView" class="hidden">
             <div class="page-container">
                 <div class="login-wrapper">
@@ -768,24 +755,24 @@
                     </div>
 
                     <div class="form-actions" style="flex-direction:column;">
-                        <button class="btn-primary" style="width:100%;" onclick="loginHR()">Sign In</button>
-                        <button class="btn-secondary" style="width:100%;" onclick="showView('home')">Back to Homepage</button>
+                        <button class="btn-primary" style="width:100%;" id="loginBtn">Sign In</button>
+                        <button class="btn-secondary" style="width:100%;" id="backHomeBtn">Back to Homepage</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ========== HR DASHBOARD (FULL PAGE) ========== -->
+        <!-- DASHBOARD VIEW -->
         <section id="dashboardView" class="hidden">
             <div class="dashboard-page">
                 <header class="dashboard-header">
-                    <div class="logo">
+                    <div class="logo" id="dashLogoBtn">
                         <div class="logo-icon">N</div>
                         <span class="logo-text">HR Dashboard</span>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button class="nav-link" onclick="showView('home')">View Site</button>
-                        <button class="nav-link primary" onclick="logoutHR()">Log Out</button>
+                        <button class="nav-link" id="viewSiteBtn">View Site</button>
+                        <button class="nav-link primary" id="logoutBtn">Log Out</button>
                     </div>
                 </header>
 
@@ -813,7 +800,7 @@
                             <h3>Applications</h3>
                             <div class="toolbar">
                                 <label style="margin:0; font-size:0.85rem; color:#64748b;">Filter:</label>
-                                <select id="hrVacancyFilter" onchange="fetchApplications()">
+                                <select id="hrVacancyFilter">
                                     <option value="All">All Vacancies</option>
                                     <option value="Support Agent">Support Agent</option>
                                     <option value="Moderator">Moderator</option>
@@ -836,7 +823,7 @@
     </main>
 
     <!-- ================= FOOTER ================= -->
-    <footer class="site-footer" id="siteFooter">
+    <footer class="site-footer">
         © 2025 Nova Studios. All rights reserved.
     </footer>
 
@@ -844,48 +831,70 @@
         // ================= CONFIG =================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHXofo1e_9Ug3MylHSIER151g3t4BlEPib00ehiAlRPeHds1TIdOgPLQ1UHfb98JbZ/exec';
 
-        // ================= VIEWS =================
+        // ================= ELEMENTS =================
         const views = {
             home: document.getElementById('homeView'),
             application: document.getElementById('applicationView'),
             login: document.getElementById('loginView'),
             dashboard: document.getElementById('dashboardView')
         };
-        const footer = document.getElementById('siteFooter');
 
+        // ================= VIEW SWITCHER =================
         function showView(name) {
-            Object.values(views).forEach(v => v.classList.add('hidden'));
-            views[name].classList.remove('hidden');
-            // Hide footer on dashboard for a cleaner admin feel
-            footer.style.display = (name === 'dashboard') ? 'none' : 'block';
-            window.scrollTo(0, 0);
+            Object.keys(views).forEach(k => views[k].classList.add('hidden'));
+            if (views[name]) {
+                views[name].classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }
         }
 
-        // ================= APPLICATION FORM =================
-        const langGroup = document.getElementById('languageGroup');
-        const modGroup = document.getElementById('moderationGroup');
+        // ================= HEADER BUTTONS =================
+        document.getElementById('logoBtn').addEventListener('click', () => showView('home'));
+        document.getElementById('navCareers').addEventListener('click', () => showView('home'));
+        document.getElementById('navHRLogin').addEventListener('click', () => showView('login'));
 
+        // ================= VACANCY APPLY BUTTONS =================
+        document.querySelectorAll('.apply-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const role = btn.getAttribute('data-role');
+                startApplication(role);
+            });
+        });
+
+        // ================= START APPLICATION =================
         function startApplication(role) {
             document.getElementById('roleInput').value = role;
             document.getElementById('formTitle').innerText = `Apply for ${role}`;
             document.getElementById('roleBadge').innerText = role;
 
+            const langGroup = document.getElementById('languageGroup');
+            const modGroup = document.getElementById('moderationGroup');
+            const langInput = document.getElementById('supportLanguages');
+            const modInput = document.getElementById('moderationAnswer');
+
             langGroup.classList.add('hidden');
             modGroup.classList.add('hidden');
-            document.getElementById('supportLanguages').required = false;
-            document.getElementById('moderationAnswer').required = false;
+            langInput.required = false;
+            modInput.required = false;
 
             if (role === 'Support Agent') {
                 langGroup.classList.remove('hidden');
-                document.getElementById('supportLanguages').required = true;
+                langInput.required = true;
             } else if (role === 'Moderator') {
                 modGroup.classList.remove('hidden');
-                document.getElementById('moderationAnswer').required = true;
+                modInput.required = true;
             }
 
             showView('application');
         }
 
+        // ================= CANCEL BUTTON =================
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            document.getElementById('staffForm').reset();
+            showView('home');
+        });
+
+        // ================= FORM SUBMIT =================
         document.getElementById('staffForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const submitBtn = this.querySelector('.btn-primary');
@@ -912,10 +921,10 @@
             .then(data => {
                 if (data.success) {
                     alert("✅ Application submitted successfully!");
-                    this.reset();
+                    document.getElementById('staffForm').reset();
                     showView('home');
                 } else {
-                    alert("Error: " + data.message);
+                    alert("Error: " + (data.message || "Unknown error"));
                 }
             })
             .catch(() => alert("Connection error. Please try again."))
@@ -925,14 +934,17 @@
             });
         });
 
-        // ================= HR LOGIN =================
+        // ================= LOGIN =================
+        document.getElementById('loginBtn').addEventListener('click', loginHR);
+        document.getElementById('backHomeBtn').addEventListener('click', () => showView('home'));
+
         function loginHR() {
             const user = document.getElementById('hrUser').value;
             const pass = document.getElementById('hrPass').value;
             const err = document.getElementById('loginError');
             err.classList.add('hidden');
 
-            const btn = document.querySelector('#loginView .btn-primary');
+            const btn = document.getElementById('loginBtn');
             const original = btn.innerText;
             btn.innerText = "Signing in...";
             btn.disabled = true;
@@ -954,7 +966,7 @@
                 }
             })
             .catch(() => {
-                err.innerText = "Connection error.";
+                err.innerText = "Connection error. Try again.";
                 err.classList.remove('hidden');
             })
             .finally(() => {
@@ -963,12 +975,11 @@
             });
         }
 
-        function logoutHR() {
-            showView('home');
-        }
-
-        // ================= HR DASHBOARD =================
-        let allRows = [];
+        // ================= DASHBOARD =================
+        document.getElementById('logoutBtn').addEventListener('click', () => showView('home'));
+        document.getElementById('viewSiteBtn').addEventListener('click', () => showView('home'));
+        document.getElementById('dashLogoBtn').addEventListener('click', () => showView('home'));
+        document.getElementById('hrVacancyFilter').addEventListener('change', fetchApplications);
 
         function fetchApplications() {
             const vacancy = document.getElementById('hrVacancyFilter').value;
@@ -982,7 +993,6 @@
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    allRows = data.rows;
                     renderTable(data.headers, data.rows);
                     updateStats(data.rows);
                 } else {
@@ -1026,7 +1036,7 @@
             container.innerHTML = html;
         }
 
-        // Initial view
+        // ================= INIT =================
         showView('home');
     </script>
 </body>
