@@ -2,440 +2,873 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Staff Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers — Join Our Team</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL RESET --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-        }
-
+        /* ============ RESET & BASE ============ */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        html, body { height: 100%; width: 100%; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffffff; /* White background, full screen */
-            color: #333;
-            min-height: 100vh;
-            min-height: 100dvh;
-        }
-
-        /* --- FULL SCREEN CONTAINER --- */
-        .container {
-            width: 100%;
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: #ffffff;
-            padding: 25px;
-            position: relative;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
+        a { text-decoration: none; color: inherit; }
+        button { font-family: inherit; }
 
-        /* Inner wrapper to keep content readable on wide screens */
-        .content-wrap {
-            width: 100%;
-            max-width: 800px;
+        /* ============ HEADER ============ */
+        .site-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        .header-inner {
+            max-width: 1280px;
             margin: 0 auto;
-            flex: 1;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
         }
-
-        /* --- HR LOGIN BUTTON (Top Right) --- */
-        .hr-login-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: #2c3e50;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #0f172a;
+            letter-spacing: -0.02em;
+        }
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 6px;
+            font-weight: 800;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-link {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #475569;
+            transition: all 0.15s;
             cursor: pointer;
-            font-size: 0.9em;
+            background: none;
+            border: none;
+        }
+        .nav-link:hover { background: #f1f5f9; color: #0f172a; }
+        .nav-link.primary {
+            background: #0f172a;
+            color: #fff;
             font-weight: 600;
-            transition: background 0.2s;
-            z-index: 10;
         }
-        .hr-login-btn:hover { background-color: #1a252f; }
+        .nav-link.primary:hover { background: #1e293b; }
 
-        /* --- TYPOGRAPHY --- */
-        h1 {
-            text-align: center;
-            color: #222;
-            font-size: 1.8em;
-            margin-bottom: 30px;
-            padding-top: 10px;
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #0f172a;
         }
-        h2 {
+
+        /* ============ MAIN CONTENT ============ */
+        .main-content { flex: 1; width: 100%; }
+
+        .page-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 60px 24px;
+            width: 100%;
+        }
+
+        /* ============ HERO ============ */
+        .hero {
             text-align: center;
-            color: #222;
-            font-size: 1.4em;
+            padding: 40px 0 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
             margin-bottom: 20px;
+            border: 1px solid #dbeafe;
+        }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            color: #0f172a;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
-        /* --- FORM STYLING --- */
-        .form-group { margin-bottom: 20px; }
+        /* ============ VACANCY CARDS ============ */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .section-subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
 
+        .vacancies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .vacancy-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .vacancy-card:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 12px 32px rgba(15,23,42,0.08);
+            transform: translateY(-4px);
+        }
+        .vacancy-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .vacancy-card:hover::before { opacity: 1; }
+
+        .vacancy-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+        }
+        .vacancy-icon.blue { background: #eff6ff; }
+        .vacancy-icon.purple { background: #f5f3ff; }
+
+        .vacancy-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.01em;
+        }
+        .vacancy-card .desc {
+            color: #64748b;
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .vacancy-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 22px;
+        }
+        .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .vacancy-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .vacancy-meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .apply-btn {
+            background: #0f172a;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .apply-btn:hover {
+            background: #1e293b;
+            transform: translateX(2px);
+        }
+
+        /* ============ FORM VIEW ============ */
+        .form-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.04);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .form-header .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .form-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+        }
+        .form-header p { color: #64748b; font-size: 0.95rem; }
+
+        .form-group { margin-bottom: 22px; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
         label {
             display: block;
-            margin-bottom: 8px;
             font-weight: 600;
-            color: #444;
-            font-size: 1em;
+            font-size: 0.88rem;
+            margin-bottom: 8px;
+            color: #334155;
         }
-
+        label .req { color: #ef4444; margin-left: 2px; }
         input, select, textarea {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #ccc;
+            padding: 12px 14px;
+            border: 1px solid #cbd5e1;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 0.95rem;
             font-family: inherit;
-            background-color: #fafafa;
-            transition: border 0.2s, background 0.2s;
+            background: #fff;
+            color: #0f172a;
+            transition: all 0.15s;
         }
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #007bff;
-            background-color: #fff;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.1);
         }
+        textarea { resize: vertical; min-height: 110px; }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f1f5f9;
         }
-
-        button.submit-btn {
-            width: 100%;
-            padding: 16px;
-            background-color: #007bff;
-            color: white;
+        .btn-primary {
+            flex: 1;
+            padding: 14px 24px;
+            background: #0f172a;
+            color: #fff;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 10px;
             font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 10px;
+            transition: all 0.15s;
         }
-        button.submit-btn:hover { background-color: #0056b3; }
-        button.submit-btn:disabled { background-color: #99c2ff; cursor: not-allowed; }
-
-        .back-btn {
-            background: none;
-            border: none;
-            margin-top: 15px;
-            color: #666;
+        .btn-primary:hover { background: #1e293b; }
+        .btn-primary:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-secondary {
+            padding: 14px 24px;
+            background: #fff;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            width: 100%;
-            padding: 12px;
-            font-size: 1em;
-            transition: color 0.2s;
+            transition: all 0.15s;
         }
-        .back-btn:hover { color: #333; text-decoration: underline; }
+        .btn-secondary:hover { background: #f8fafc; border-color: #94a3b8; }
 
-        /* --- UTILITY --- */
-        .hidden { display: none !important; }
-        .error-msg {
-            color: #dc3545;
-            font-size: 0.95em;
-            margin-bottom: 15px;
+        /* ============ LOGIN VIEW ============ */
+        .login-wrapper {
+            max-width: 420px;
+            margin: 40px auto;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.04);
+        }
+        .login-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .login-wrapper h2 {
             text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .login-wrapper .subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
             font-weight: 500;
         }
+        .alert-error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
 
-        /* --- ROLE CARDS --- */
-        .role-selection {
+        /* ============ HR DASHBOARD (FULL PAGE) ============ */
+        .dashboard-page {
+            min-height: 100vh;
+            background: #f8fafc;
             display: flex;
+            flex-direction: column;
+        }
+        .dashboard-header {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
+        }
+        .dashboard-header .logo-icon { width: 32px; height: 32px; font-size: 0.85rem; }
+        .dashboard-body {
+            flex: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            width: 100%;
+        }
+
+        /* Stats cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .stat-card .stat-label {
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: #0f172a;
+        }
+        .stat-card .stat-sub {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Table panel */
+        .panel {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .panel-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
             flex-wrap: wrap;
         }
-
-        .role-card {
-            border: 2px solid #e0e0e0;
-            padding: 40px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
-            flex: 1;
-            min-width: 180px;
-            background: #fff;
+        .panel-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
         }
-        .role-card:hover {
-            border-color: #007bff;
-            background-color: #f7fbff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,123,255,0.15);
-        }
-        .role-card h3 { margin: 0; font-size: 1.2em; color: #333; }
-
-        /* --- MODAL (HR Dashboard) --- */
-        .modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 10px;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .dashboard-content {
-            max-width: 95% !important;
-            text-align: left;
-        }
-
-        /* --- TABLE (HR Dashboard) --- */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            margin-top: 15px;
-            border-radius: 8px;
-            border: 1px solid #eee;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85em;
-            min-width: 900px;
-        }
-
-        th, td {
-            border-bottom: 1px solid #eee;
-            padding: 10px;
-            text-align: left;
-            white-space: nowrap;
-        }
-        th { background-color: #f8f9fa; font-weight: 600; color: #555; }
-
-        /* --- FILTER BAR --- */
-        .filter-bar {
+        .panel-header .toolbar {
             display: flex;
             gap: 10px;
             align-items: center;
-            margin-bottom: 15px;
             flex-wrap: wrap;
         }
-        .filter-bar select { width: auto; flex: 1; min-width: 150px; padding: 10px; }
+        .panel-header select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: #fff;
+            cursor: pointer;
+            width: auto;
+        }
+        .panel-header select:focus { outline: none; border-color: #3b82f6; }
 
-        /* =========================================================
-           RESPONSIVE DESIGN
-           ========================================================= */
+        .table-scroll { overflow-x: auto; }
 
-        /* --- PHONES --- */
-        @media (max-width: 600px) {
-            .container { padding: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th {
+            text-align: left;
+            padding: 14px 16px;
+            background: #f8fafc;
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            white-space: nowrap;
+        }
+        tbody tr:hover { background: #f8fafc; }
+        tbody tr:last-child td { border-bottom: none; }
 
-            h1 { font-size: 1.5em; margin-bottom: 25px; margin-top: 50px; }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+        .empty-state .icon { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.5; }
 
-            .hr-login-btn {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                padding: 8px 14px;
-                font-size: 0.85em;
-            }
-
-            .role-selection { flex-direction: column; gap: 15px; margin-top: 20px; }
-            .role-card { padding: 30px 15px; width: 100%; min-width: unset; }
-
-            input, select, textarea { padding: 14px; font-size: 16px; }
-
-            .modal-content { padding: 20px; }
-            .dashboard-content { max-width: 100% !important; }
+        /* ============ FOOTER ============ */
+        .site-footer {
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            padding: 24px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: auto;
         }
 
-        /* --- TABLETS --- */
-        @media (min-width: 768px) {
-            .container { padding: 40px; }
+        /* ============ UTILITY ============ */
+        .hidden { display: none !important; }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .header-inner { padding: 14px 16px; }
+            .nav-link { padding: 8px 10px; font-size: 0.85rem; }
+            .nav-link.primary { padding: 8px 12px; }
+            .page-container { padding: 32px 16px; }
+            .form-wrapper { padding: 24px 20px; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .form-actions { flex-direction: column; }
+            .login-wrapper { padding: 28px 20px; margin: 20px auto; }
+            .dashboard-body { padding: 20px 16px; }
+            .dashboard-header { padding: 14px 16px; }
+            .panel-header { padding: 16px; }
+            .stat-card .stat-value { font-size: 1.5rem; }
+            .vacancies-grid { grid-template-columns: 1fr; }
+            .hero { padding: 20px 0; }
         }
 
-        /* --- DESKTOPS --- */
-        @media (min-width: 1200px) {
-            .container { padding: 50px; }
-            .content-wrap { max-width: 900px; }
+        @media (max-width: 480px) {
+            .logo-text { display: none; }
+            .nav-link { padding: 6px 8px; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- HR LOGIN BUTTON (Top Right) -->
-        <button class="hr-login-btn" onclick="openHRLogin()">HR Log In</button>
-
-        <div class="content-wrap">
-
-            <!-- ================= LANDING VIEW ================= -->
-            <div id="landingView">
-                <h1>Join Our Team</h1>
-                <p style="text-align: center; color: #666; font-size: 1.05em;">Select a position to apply for:</p>
-                <div class="role-selection">
-                    <div class="role-card" onclick="startApplication('Support Agent')">
-                        <h3>Support Agent</h3>
-                    </div>
-                    <div class="role-card" onclick="startApplication('Moderator')">
-                        <h3>Moderator</h3>
-                    </div>
-                </div>
+    <!-- ================= SITE HEADER ================= -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo" onclick="showView('home')" style="cursor:pointer;">
+                <div class="logo-icon">N</div>
+                <span class="logo-text">Nova Studios</span>
             </div>
-
-            <!-- ================= APPLICATION FORM VIEW ================= -->
-            <div id="applicationView" class="hidden">
-                <h1 id="formTitle">Apply</h1>
-                <form id="staffForm">
-                    <input type="hidden" id="roleInput">
-                    
-                    <div class="form-group">
-                        <label>1. Roblox Username</label>
-                        <input type="text" id="robloxUser" required>
-                    </div>
-                    <div class="form-group">
-                        <label>2. Discord Username</label>
-                        <input type="text" id="discordUser" required>
-                    </div>
-                    <div class="form-group">
-                        <label>3. Age Range</label>
-                        <select id="ageRange" required>
-                            <option value="">Select</option>
-                            <option value="Under 13">Under 13</option>
-                            <option value="13-15">13-15</option>
-                            <option value="16-18">16-18</option>
-                            <option value="18+">18+</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>4. Time Zone</label>
-                        <input type="text" id="timeZone" placeholder="e.g. CET, GMT+3" required>
-                    </div>
-                    <div class="form-group">
-                        <label>5. Availability</label>
-                        <select id="availability" required>
-                            <option value="">Select</option>
-                            <option value="Daily">Daily</option>
-                            <option value="Weekends">Weekends Only</option>
-                            <option value="3-4 times a week">3-4 times a week</option>
-                        </select>
-                    </div>
-
-                    <!-- Dynamic Field: Support Agent Only -->
-                    <div class="form-group hidden" id="languageGroup">
-                        <label>6. Which language do you want to support in?</label>
-                        <input type="text" id="supportLanguages" placeholder="e.g. English, Spanish">
-                    </div>
-
-                    <!-- Dynamic Field: Moderator Only -->
-                    <div class="form-group hidden" id="moderationGroup">
-                        <label>6. A user is breaking the rules in chat. What do you do?</label>
-                        <textarea id="moderationAnswer"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label id="scenarioLabel">7. A customer is angry about a model. What do you do?</label>
-                        <textarea id="scenarioAnswer" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>8. Why should we hire you?</label>
-                        <textarea id="whyHire" required></textarea>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Submit Application</button>
-                    <button type="button" class="back-btn" onclick="goBack()">← Back to Homepage</button>
-                </form>
-            </div>
-
-            <!-- ================= HR LOGIN VIEW ================= -->
-            <div id="hrLoginView" class="hidden">
-                <h1>HR Login</h1>
-                <div id="loginError" class="error-msg hidden">Invalid Credentials</div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" id="hrUser">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="hrPass">
-                </div>
-                <button class="submit-btn" onclick="loginHR()">Log In</button>
-                <button type="button" class="back-btn" onclick="backToHome()">← Back to Homepage</button>
-            </div>
-
+            <nav class="header-nav">
+                <button class="nav-link" onclick="showView('home')">Careers</button>
+                <button class="nav-link primary" onclick="showView('login')">HR Log In</button>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <!-- ================= HR DASHBOARD MODAL ================= -->
-    <div id="dashboardModal" class="modal hidden">
-        <div class="modal-content dashboard-content">
-            <h2>HR Dashboard</h2>
-            <div class="filter-bar">
-                <label style="margin:0;">Filter:</label>
-                <select id="hrVacancyFilter" onchange="fetchApplications()">
-                    <option value="All">All Applications</option>
-                    <option value="Support Agent">Support Agent</option>
-                    <option value="Moderator">Moderator</option>
-                </select>
-            </div>
-            
-            <div id="tableContainer" class="table-wrapper">
-                <p style="padding: 15px;"><em>Loading applications...</em></p>
-            </div>
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="main-content">
 
-            <button onclick="closeDashboard()" class="submit-btn" style="margin-top:20px;">Close Dashboard</button>
-        </div>
-    </div>
+        <!-- ========== HOME / LANDING ========== -->
+        <section id="homeView">
+            <div class="page-container">
+                <div class="hero">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        <span>We're hiring now</span>
+                    </div>
+                    <h1>Join the team at <span class="gradient">Nova Studios</span></h1>
+                    <p>Be part of a fast-growing community. We're looking for passionate people to help us deliver the best experience.</p>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <h2 class="section-title">Open Positions</h2>
+                    <p class="section-subtitle">Choose a role that fits you best and submit your application.</p>
+
+                    <div class="vacancies-grid">
+                        <!-- Support Agent Card -->
+                        <div class="vacancy-card">
+                            <div class="vacancy-icon blue">🎧</div>
+                            <h3>Support Agent</h3>
+                            <p class="desc">Help our users with their issues, answer questions, and provide a friendly experience across all our channels.</p>
+                            <div class="vacancy-tags">
+                                <span class="tag">Customer Service</span>
+                                <span class="tag">Multi-language</span>
+                                <span class="tag">Remote</span>
+                            </div>
+                            <div class="vacancy-footer">
+                                <span class="vacancy-meta">Full-time • Flexible</span>
+                                <button class="apply-btn" onclick="startApplication('Support Agent')">
+                                    Apply Now →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Moderator Card -->
+                        <div class="vacancy-card">
+                            <div class="vacancy-icon purple">🛡️</div>
+                            <h3>Moderator</h3>
+                            <p class="desc">Keep our community safe and welcoming. Review reports, enforce rules, and handle conflicts fairly and quickly.</p>
+                            <div class="vacancy-tags">
+                                <span class="tag">Community</span>
+                                <span class="tag">Rule Enforcement</span>
+                                <span class="tag">Remote</span>
+                            </div>
+                            <div class="vacancy-footer">
+                                <span class="vacancy-meta">Part-time • Flexible</span>
+                                <button class="apply-btn" onclick="startApplication('Moderator')">
+                                    Apply Now →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== APPLICATION FORM ========== -->
+        <section id="applicationView" class="hidden">
+            <div class="page-container">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <div class="role-badge" id="roleBadge">Position</div>
+                        <h2 id="formTitle">Apply</h2>
+                        <p>Fill out the form below and we'll get back to you shortly.</p>
+                    </div>
+
+                    <form id="staffForm">
+                        <input type="hidden" id="roleInput">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Roblox Username <span class="req">*</span></label>
+                                <input type="text" id="robloxUser" required placeholder="YourRobloxName">
+                            </div>
+                            <div class="form-group">
+                                <label>Discord Username <span class="req">*</span></label>
+                                <input type="text" id="discordUser" required placeholder="username#0000">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Age Range <span class="req">*</span></label>
+                                <select id="ageRange" required>
+                                    <option value="">Select your age range</option>
+                                    <option value="Under 13">Under 13</option>
+                                    <option value="13-15">13-15</option>
+                                    <option value="16-18">16-18</option>
+                                    <option value="18+">18+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Time Zone <span class="req">*</span></label>
+                                <input type="text" id="timeZone" placeholder="e.g. CET, GMT+3" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Availability <span class="req">*</span></label>
+                            <select id="availability" required>
+                                <option value="">How often can you work?</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekends">Weekends Only</option>
+                                <option value="3-4 times a week">3-4 times a week</option>
+                            </select>
+                        </div>
+
+                        <!-- Support Agent only -->
+                        <div class="form-group hidden" id="languageGroup">
+                            <label>Which language do you want to support in? <span class="req">*</span></label>
+                            <input type="text" id="supportLanguages" placeholder="e.g. English, Spanish">
+                        </div>
+
+                        <!-- Moderator only -->
+                        <div class="form-group hidden" id="moderationGroup">
+                            <label>A user is breaking the rules in chat. What do you do? <span class="req">*</span></label>
+                            <textarea id="moderationAnswer"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>A customer is angry about a model. What do you do? <span class="req">*</span></label>
+                            <textarea id="scenarioAnswer" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Why should we hire you? <span class="req">*</span></label>
+                            <textarea id="whyHire" required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="showView('home')">Cancel</button>
+                            <button type="submit" class="btn-primary">Submit Application</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HR LOGIN ========== -->
+        <section id="loginView" class="hidden">
+            <div class="page-container">
+                <div class="login-wrapper">
+                    <div class="login-icon">🔒</div>
+                    <h2>HR Login</h2>
+                    <p class="subtitle">Sign in to access the admin dashboard</p>
+
+                    <div id="loginError" class="alert alert-error hidden">Invalid credentials</div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="hrUser" placeholder="Your username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="hrPass" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-actions" style="flex-direction:column;">
+                        <button class="btn-primary" style="width:100%;" onclick="loginHR()">Sign In</button>
+                        <button class="btn-secondary" style="width:100%;" onclick="showView('home')">Back to Homepage</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== HR DASHBOARD (FULL PAGE) ========== -->
+        <section id="dashboardView" class="hidden">
+            <div class="dashboard-page">
+                <header class="dashboard-header">
+                    <div class="logo">
+                        <div class="logo-icon">N</div>
+                        <span class="logo-text">HR Dashboard</span>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="nav-link" onclick="showView('home')">View Site</button>
+                        <button class="nav-link primary" onclick="logoutHR()">Log Out</button>
+                    </div>
+                </header>
+
+                <div class="dashboard-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Applications</div>
+                            <div class="stat-value" id="statTotal">—</div>
+                            <div class="stat-sub">All time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Support Agents</div>
+                            <div class="stat-value" id="statSupport">—</div>
+                            <div class="stat-sub">Applications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Moderators</div>
+                            <div class="stat-value" id="statMod">—</div>
+                            <div class="stat-sub">Applications</div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Applications</h3>
+                            <div class="toolbar">
+                                <label style="margin:0; font-size:0.85rem; color:#64748b;">Filter:</label>
+                                <select id="hrVacancyFilter" onchange="fetchApplications()">
+                                    <option value="All">All Vacancies</option>
+                                    <option value="Support Agent">Support Agent</option>
+                                    <option value="Moderator">Moderator</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-scroll">
+                            <div id="tableContainer">
+                                <div class="empty-state">
+                                    <div class="icon">📄</div>
+                                    <p>Loading applications...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer" id="siteFooter">
+        © 2025 Nova Studios. All rights reserved.
+    </footer>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHXofo1e_9Ug3MylHSIER151g3t4BlEPib00ehiAlRPeHds1TIdOgPLQ1UHfb98JbZ/exec;
+        // ================= CONFIG =================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHXofo1e_9Ug3MylHSIER151g3t4BlEPib00ehiAlRPeHds1TIdOgPLQ1UHfb98JbZ/exec';
 
-        const landingView = document.getElementById('landingView');
-        const applicationView = document.getElementById('applicationView');
-        const hrLoginView = document.getElementById('hrLoginView');
-        const dashboardModal = document.getElementById('dashboardModal');
-        const langGroup = document.getElementById('languageGroup');
-        const modGroup = document.getElementById('moderationGroup');
+        // ================= VIEWS =================
+        const views = {
+            home: document.getElementById('homeView'),
+            application: document.getElementById('applicationView'),
+            login: document.getElementById('loginView'),
+            dashboard: document.getElementById('dashboardView')
+        };
+        const footer = document.getElementById('siteFooter');
 
-        function showView(view) {
-            landingView.classList.add('hidden');
-            applicationView.classList.add('hidden');
-            hrLoginView.classList.add('hidden');
-            view.classList.remove('hidden');
+        function showView(name) {
+            Object.values(views).forEach(v => v.classList.add('hidden'));
+            views[name].classList.remove('hidden');
+            // Hide footer on dashboard for a cleaner admin feel
+            footer.style.display = (name === 'dashboard') ? 'none' : 'block';
             window.scrollTo(0, 0);
         }
 
-        function backToHome() {
-            showView(landingView);
-            document.getElementById('staffForm').reset();
-            document.getElementById('hrUser').value = '';
-            document.getElementById('hrPass').value = '';
-            document.getElementById('loginError').classList.add('hidden');
-        }
+        // ================= APPLICATION FORM =================
+        const langGroup = document.getElementById('languageGroup');
+        const modGroup = document.getElementById('moderationGroup');
 
         function startApplication(role) {
-            showView(applicationView);
             document.getElementById('roleInput').value = role;
             document.getElementById('formTitle').innerText = `Apply for ${role}`;
+            document.getElementById('roleBadge').innerText = role;
 
             langGroup.classList.add('hidden');
             modGroup.classList.add('hidden');
@@ -449,17 +882,18 @@
                 modGroup.classList.remove('hidden');
                 document.getElementById('moderationAnswer').required = true;
             }
-        }
 
-        function goBack() { backToHome(); }
+            showView('application');
+        }
 
         document.getElementById('staffForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            const submitBtn = document.querySelector('#staffForm .submit-btn');
+            const submitBtn = this.querySelector('.btn-primary');
+            const original = submitBtn.innerText;
             submitBtn.innerText = "Submitting...";
             submitBtn.disabled = true;
 
-            const formData = {
+            const payload = {
                 action: "submit",
                 role: document.getElementById('roleInput').value,
                 robloxUser: document.getElementById('robloxUser').value,
@@ -473,92 +907,127 @@
                 moderationAnswer: document.getElementById('moderationAnswer').value
             };
 
-            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) })
-            .then(res => res.json())
+            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) })
+            .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    alert("Application submitted successfully!");
-                    backToHome();
-                } else { alert("Error: " + data.message); }
+                    alert("✅ Application submitted successfully!");
+                    this.reset();
+                    showView('home');
+                } else {
+                    alert("Error: " + data.message);
+                }
             })
-            .catch(err => alert("Connection error."))
+            .catch(() => alert("Connection error. Please try again."))
             .finally(() => {
-                submitBtn.innerText = "Submit Application";
+                submitBtn.innerText = original;
                 submitBtn.disabled = false;
             });
         });
 
-        function openHRLogin() { showView(hrLoginView); }
-
+        // ================= HR LOGIN =================
         function loginHR() {
             const user = document.getElementById('hrUser').value;
             const pass = document.getElementById('hrPass').value;
-            const loginBtn = document.querySelector('#hrLoginView .submit-btn');
-            
-            loginBtn.innerText = "Logging in...";
-            loginBtn.disabled = true;
+            const err = document.getElementById('loginError');
+            err.classList.add('hidden');
+
+            const btn = document.querySelector('#loginView .btn-primary');
+            const original = btn.innerText;
+            btn.innerText = "Signing in...";
+            btn.disabled = true;
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action: "login", username: user, password: pass })
             })
-            .then(res => res.json())
+            .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    dashboardModal.classList.remove('hidden');
+                    document.getElementById('hrUser').value = '';
+                    document.getElementById('hrPass').value = '';
+                    showView('dashboard');
                     fetchApplications();
                 } else {
-                    document.getElementById('loginError').innerText = data.message || "Invalid Credentials";
-                    document.getElementById('loginError').classList.remove('hidden');
+                    err.innerText = data.message || "Invalid credentials";
+                    err.classList.remove('hidden');
                 }
             })
-            .catch(err => alert("Login system error"))
+            .catch(() => {
+                err.innerText = "Connection error.";
+                err.classList.remove('hidden');
+            })
             .finally(() => {
-                loginBtn.innerText = "Log In";
-                loginBtn.disabled = false;
+                btn.innerText = original;
+                btn.disabled = false;
             });
         }
 
+        function logoutHR() {
+            showView('home');
+        }
+
+        // ================= HR DASHBOARD =================
+        let allRows = [];
+
         function fetchApplications() {
             const vacancy = document.getElementById('hrVacancyFilter').value;
-            const tableContainer = document.getElementById('tableContainer');
-            tableContainer.innerHTML = "<p style='padding: 15px;'><em>Loading data...</em></p>";
+            const container = document.getElementById('tableContainer');
+            container.innerHTML = '<div class="empty-state"><div class="icon">⏳</div><p>Loading...</p></div>';
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({ action: "getApplications", vacancy: vacancy })
             })
-            .then(res => res.json())
+            .then(r => r.json())
             .then(data => {
-                if (data.success) { renderTable(data.headers, data.rows); }
-                else { tableContainer.innerHTML = "<p style='padding: 15px;'>Error loading data.</p>"; }
+                if (data.success) {
+                    allRows = data.rows;
+                    renderTable(data.headers, data.rows);
+                    updateStats(data.rows);
+                } else {
+                    container.innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>Error loading data.</p></div>';
+                }
             })
-            .catch(err => tableContainer.innerHTML = "<p style='padding: 15px;'>Connection error.</p>");
+            .catch(() => {
+                container.innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>Connection error.</p></div>';
+            });
+        }
+
+        function updateStats(rows) {
+            const total = rows.length;
+            const support = rows.filter(r => r[1] === 'Support Agent').length;
+            const mod = rows.filter(r => r[1] === 'Moderator').length;
+            document.getElementById('statTotal').innerText = total;
+            document.getElementById('statSupport').innerText = support;
+            document.getElementById('statMod').innerText = mod;
         }
 
         function renderTable(headers, rows) {
             const container = document.getElementById('tableContainer');
-            if (rows.length === 0) {
-                container.innerHTML = "<p style='padding: 15px;'>No applications found.</p>"; return;
+            if (!rows || rows.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div class="icon">📭</div><p>No applications found.</p></div>';
+                return;
             }
-            let html = "<table><thead><tr>";
+            let html = '<table><thead><tr>';
             headers.forEach(h => html += `<th>${h}</th>`);
-            html += "</tr></thead><tbody>";
+            html += '</tr></thead><tbody>';
             rows.forEach(row => {
-                html += "<tr>";
+                html += '<tr>';
                 row.forEach(cell => {
                     if (cell instanceof Object && cell.toString().includes("GMT")) {
                         cell = new Date(cell).toLocaleString();
                     }
                     html += `<td>${cell}</td>`;
                 });
-                html += "</tr>";
+                html += '</tr>';
             });
-            html += "</tbody></table>";
+            html += '</tbody></table>';
             container.innerHTML = html;
         }
 
-        function closeDashboard() { dashboardModal.classList.add('hidden'); }
+        // Initial view
+        showView('home');
     </script>
 </body>
 </html>
