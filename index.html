@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Staff Application</title>
+    <style>
+        /* --- GLOBAL RESET --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff; /* White background, full screen */
+            color: #333;
+            min-height: 100vh;
+            min-height: 100dvh;
+        }
+
+        /* --- FULL SCREEN CONTAINER --- */
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            background: #ffffff;
+            padding: 25px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Inner wrapper to keep content readable on wide screens */
+        .content-wrap {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* --- HR LOGIN BUTTON (Top Right) --- */
+        .hr-login-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+        .hr-login-btn:hover { background-color: #1a252f; }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            text-align: center;
+            color: #222;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            padding-top: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #222;
+            font-size: 1.4em;
+            margin-bottom: 20px;
+        }
+
+        /* --- FORM STYLING --- */
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 1em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            background-color: #fafafa;
+            transition: border 0.2s, background 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            background-color: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+        button.submit-btn:hover { background-color: #0056b3; }
+        button.submit-btn:disabled { background-color: #99c2ff; cursor: not-allowed; }
+
+        .back-btn {
+            background: none;
+            border: none;
+            margin-top: 15px;
+            color: #666;
+            cursor: pointer;
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            transition: color 0.2s;
+        }
+        .back-btn:hover { color: #333; text-decoration: underline; }
+
+        /* --- UTILITY --- */
+        .hidden { display: none !important; }
+        .error-msg {
+            color: #dc3545;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* --- ROLE CARDS --- */
+        .role-selection {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .role-card {
+            border: 2px solid #e0e0e0;
+            padding: 40px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 180px;
+            background: #fff;
+        }
+        .role-card:hover {
+            border-color: #007bff;
+            background-color: #f7fbff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,123,255,0.15);
+        }
+        .role-card h3 { margin: 0; font-size: 1.2em; color: #333; }
+
+        /* --- MODAL (HR Dashboard) --- */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 10px;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .dashboard-content {
+            max-width: 95% !important;
+            text-align: left;
+        }
+
+        /* --- TABLE (HR Dashboard) --- */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85em;
+            min-width: 900px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th { background-color: #f8f9fa; font-weight: 600; color: #555; }
+
+        /* --- FILTER BAR --- */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .filter-bar select { width: auto; flex: 1; min-width: 150px; padding: 10px; }
+
+        /* =========================================================
+           RESPONSIVE DESIGN
+           ========================================================= */
+
+        /* --- PHONES --- */
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+
+            h1 { font-size: 1.5em; margin-bottom: 25px; margin-top: 50px; }
+
+            .hr-login-btn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                padding: 8px 14px;
+                font-size: 0.85em;
+            }
+
+            .role-selection { flex-direction: column; gap: 15px; margin-top: 20px; }
+            .role-card { padding: 30px 15px; width: 100%; min-width: unset; }
+
+            input, select, textarea { padding: 14px; font-size: 16px; }
+
+            .modal-content { padding: 20px; }
+            .dashboard-content { max-width: 100% !important; }
+        }
+
+        /* --- TABLETS --- */
+        @media (min-width: 768px) {
+            .container { padding: 40px; }
+        }
+
+        /* --- DESKTOPS --- */
+        @media (min-width: 1200px) {
+            .container { padding: 50px; }
+            .content-wrap { max-width: 900px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HR LOGIN BUTTON (Top Right) -->
+        <button class="hr-login-btn" onclick="openHRLogin()">HR Log In</button>
+
+        <div class="content-wrap">
+
+            <!-- ================= LANDING VIEW ================= -->
+            <div id="landingView">
+                <h1>Join Our Team</h1>
+                <p style="text-align: center; color: #666; font-size: 1.05em;">Select a position to apply for:</p>
+                <div class="role-selection">
+                    <div class="role-card" onclick="startApplication('Support Agent')">
+                        <h3>Support Agent</h3>
+                    </div>
+                    <div class="role-card" onclick="startApplication('Moderator')">
+                        <h3>Moderator</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= APPLICATION FORM VIEW ================= -->
+            <div id="applicationView" class="hidden">
+                <h1 id="formTitle">Apply</h1>
+                <form id="staffForm">
+                    <input type="hidden" id="roleInput">
+                    
+                    <div class="form-group">
+                        <label>1. Roblox Username</label>
+                        <input type="text" id="robloxUser" required>
+                    </div>
+                    <div class="form-group">
+                        <label>2. Discord Username</label>
+                        <input type="text" id="discordUser" required>
+                    </div>
+                    <div class="form-group">
+                        <label>3. Age Range</label>
+                        <select id="ageRange" required>
+                            <option value="">Select</option>
+                            <option value="Under 13">Under 13</option>
+                            <option value="13-15">13-15</option>
+                            <option value="16-18">16-18</option>
+                            <option value="18+">18+</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>4. Time Zone</label>
+                        <input type="text" id="timeZone" placeholder="e.g. CET, GMT+3" required>
+                    </div>
+                    <div class="form-group">
+                        <label>5. Availability</label>
+                        <select id="availability" required>
+                            <option value="">Select</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekends">Weekends Only</option>
+                            <option value="3-4 times a week">3-4 times a week</option>
+                        </select>
+                    </div>
+
+                    <!-- Dynamic Field: Support Agent Only -->
+                    <div class="form-group hidden" id="languageGroup">
+                        <label>6. Which language do you want to support in?</label>
+                        <input type="text" id="supportLanguages" placeholder="e.g. English, Spanish">
+                    </div>
+
+                    <!-- Dynamic Field: Moderator Only -->
+                    <div class="form-group hidden" id="moderationGroup">
+                        <label>6. A user is breaking the rules in chat. What do you do?</label>
+                        <textarea id="moderationAnswer"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="scenarioLabel">7. A customer is angry about a model. What do you do?</label>
+                        <textarea id="scenarioAnswer" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>8. Why should we hire you?</label>
+                        <textarea id="whyHire" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Submit Application</button>
+                    <button type="button" class="back-btn" onclick="goBack()">← Back to Homepage</button>
+                </form>
+            </div>
+
+            <!-- ================= HR LOGIN VIEW ================= -->
+            <div id="hrLoginView" class="hidden">
+                <h1>HR Login</h1>
+                <div id="loginError" class="error-msg hidden">Invalid Credentials</div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="hrUser">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="hrPass">
+                </div>
+                <button class="submit-btn" onclick="loginHR()">Log In</button>
+                <button type="button" class="back-btn" onclick="backToHome()">← Back to Homepage</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= HR DASHBOARD MODAL ================= -->
+    <div id="dashboardModal" class="modal hidden">
+        <div class="modal-content dashboard-content">
+            <h2>HR Dashboard</h2>
+            <div class="filter-bar">
+                <label style="margin:0;">Filter:</label>
+                <select id="hrVacancyFilter" onchange="fetchApplications()">
+                    <option value="All">All Applications</option>
+                    <option value="Support Agent">Support Agent</option>
+                    <option value="Moderator">Moderator</option>
+                </select>
+            </div>
+            
+            <div id="tableContainer" class="table-wrapper">
+                <p style="padding: 15px;"><em>Loading applications...</em></p>
+            </div>
+
+            <button onclick="closeDashboard()" class="submit-btn" style="margin-top:20px;">Close Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxHXofo1e_9Ug3MylHSIER151g3t4BlEPib00ehiAlRPeHds1TIdOgPLQ1UHfb98JbZ/exec';
+
+        const landingView = document.getElementById('landingView');
+        const applicationView = document.getElementById('applicationView');
+        const hrLoginView = document.getElementById('hrLoginView');
+        const dashboardModal = document.getElementById('dashboardModal');
+        const langGroup = document.getElementById('languageGroup');
+        const modGroup = document.getElementById('moderationGroup');
+
+        function showView(view) {
+            landingView.classList.add('hidden');
+            applicationView.classList.add('hidden');
+            hrLoginView.classList.add('hidden');
+            view.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function backToHome() {
+            showView(landingView);
+            document.getElementById('staffForm').reset();
+            document.getElementById('hrUser').value = '';
+            document.getElementById('hrPass').value = '';
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        function startApplication(role) {
+            showView(applicationView);
+            document.getElementById('roleInput').value = role;
+            document.getElementById('formTitle').innerText = `Apply for ${role}`;
+
+            langGroup.classList.add('hidden');
+            modGroup.classList.add('hidden');
+            document.getElementById('supportLanguages').required = false;
+            document.getElementById('moderationAnswer').required = false;
+
+            if (role === 'Support Agent') {
+                langGroup.classList.remove('hidden');
+                document.getElementById('supportLanguages').required = true;
+            } else if (role === 'Moderator') {
+                modGroup.classList.remove('hidden');
+                document.getElementById('moderationAnswer').required = true;
+            }
+        }
+
+        function goBack() { backToHome(); }
+
+        document.getElementById('staffForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = document.querySelector('#staffForm .submit-btn');
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
+
+            const formData = {
+                action: "submit",
+                role: document.getElementById('roleInput').value,
+                robloxUser: document.getElementById('robloxUser').value,
+                discordUser: document.getElementById('discordUser').value,
+                ageRange: document.getElementById('ageRange').value,
+                timeZone: document.getElementById('timeZone').value,
+                availability: document.getElementById('availability').value,
+                supportLanguages: document.getElementById('supportLanguages').value,
+                scenarioAnswer: document.getElementById('scenarioAnswer').value,
+                whyHire: document.getElementById('whyHire').value,
+                moderationAnswer: document.getElementById('moderationAnswer').value
+            };
+
+            fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(formData) })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Application submitted successfully!");
+                    backToHome();
+                } else { alert("Error: " + data.message); }
+            })
+            .catch(err => alert("Connection error."))
+            .finally(() => {
+                submitBtn.innerText = "Submit Application";
+                submitBtn.disabled = false;
+            });
+        });
+
+        function openHRLogin() { showView(hrLoginView); }
+
+        function loginHR() {
+            const user = document.getElementById('hrUser').value;
+            const pass = document.getElementById('hrPass').value;
+            const loginBtn = document.querySelector('#hrLoginView .submit-btn');
+            
+            loginBtn.innerText = "Logging in...";
+            loginBtn.disabled = true;
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: "login", username: user, password: pass })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    dashboardModal.classList.remove('hidden');
+                    fetchApplications();
+                } else {
+                    document.getElementById('loginError').innerText = data.message || "Invalid Credentials";
+                    document.getElementById('loginError').classList.remove('hidden');
+                }
+            })
+            .catch(err => alert("Login system error"))
+            .finally(() => {
+                loginBtn.innerText = "Log In";
+                loginBtn.disabled = false;
+            });
+        }
+
+        function fetchApplications() {
+            const vacancy = document.getElementById('hrVacancyFilter').value;
+            const tableContainer = document.getElementById('tableContainer');
+            tableContainer.innerHTML = "<p style='padding: 15px;'><em>Loading data...</em></p>";
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: "getApplications", vacancy: vacancy })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) { renderTable(data.headers, data.rows); }
+                else { tableContainer.innerHTML = "<p style='padding: 15px;'>Error loading data.</p>"; }
+            })
+            .catch(err => tableContainer.innerHTML = "<p style='padding: 15px;'>Connection error.</p>");
+        }
+
+        function renderTable(headers, rows) {
+            const container = document.getElementById('tableContainer');
+            if (rows.length === 0) {
+                container.innerHTML = "<p style='padding: 15px;'>No applications found.</p>"; return;
+            }
+            let html = "<table><thead><tr>";
+            headers.forEach(h => html += `<th>${h}</th>`);
+            html += "</tr></thead><tbody>";
+            rows.forEach(row => {
+                html += "<tr>";
+                row.forEach(cell => {
+                    if (cell instanceof Object && cell.toString().includes("GMT")) {
+                        cell = new Date(cell).toLocaleString();
+                    }
+                    html += `<td>${cell}</td>`;
+                });
+                html += "</tr>";
+            });
+            html += "</tbody></table>";
+            container.innerHTML = html;
+        }
+
+        function closeDashboard() { dashboardModal.classList.add('hidden'); }
+    </script>
+</body>
+</html>
