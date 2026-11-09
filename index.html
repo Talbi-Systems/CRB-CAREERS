@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers at CRB Group</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo" id="logoBtn">
+                <img src="logo.png" alt="CRB" class="logo-icon">
+            </div>
+            <nav class="header-nav">
+                <button class="nav-link" id="navCareers">Careers</button>
+                <button class="nav-link primary" id="navHRLogin">HR Log In</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main-content">
+
+        <!-- HOME VIEW -->
+        <section id="homeView">
+            <div class="page-container">
+                <div class="hero">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        <span>We're hiring now</span>
+                    </div>
+                    <h1>Join the team at <span class="gradient">CRB Group</span></h1>
+                    <p>Be part of a fast-growing community. We're looking for passionate people to help us deliver the best Products.</p>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <h2 class="section-title">Open Position</h2>
+                    <p class="section-subtitle">We currently have one vacancy. Submit your application below.</p>
+
+                    <div class="vacancies-grid">
+                        <!-- Customer Agent -->
+                        <div class="vacancy-card">
+                            <div class="vacancy-icon blue">🎧</div>
+                            <h3>Customer Agent</h3>
+                            <p class="desc">Help our users with their issues, answer questions, and provide a friendly experience across all our channels.</p>
+                            <div class="vacancy-tags">
+                                <span class="tag">Customer Service</span>
+                                <span class="tag">Multi-language</span>
+                                <span class="tag">Remote</span>
+                            </div>
+                            <div class="vacancy-footer">
+                                <span class="vacancy-meta">Full-time • Flexible</span>
+                                <button class="apply-btn" data-role="Customer Agent">
+                                    Apply Now →
+                                </button>
+                            </div>
+                        </div>                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPLICATION VIEW -->
+        <section id="applicationView" class="hidden">
+            <div class="page-container">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <div class="role-badge" id="roleBadge">Position</div>
+                        <h2 id="formTitle">Apply</h2>
+                        <p>Fill out the form below and we'll get back to you shortly.</p>
+                    </div>
+
+                    <form id="staffForm">
+                        <input type="hidden" id="roleInput">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Roblox Username <span class="req">*</span></label>
+                                <input type="text" id="robloxUser" required placeholder="YourRobloxName">
+                            </div>
+                            <div class="form-group">
+                                <label>Discord Username <span class="req">*</span></label>
+                                <input type="text" id="discordUser" required placeholder="username#0000">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Age Range <span class="req">*</span></label>
+                                <select id="ageRange" required>
+                                    <option value="">Select your age range</option>
+                                    <option value="Under 13">Under 13</option>
+                                    <option value="13-15">13-15</option>
+                                    <option value="16-18">16-18</option>
+                                    <option value="18+">18+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Time Zone <span class="req">*</span></label>
+                                <input type="text" id="timeZone" placeholder="e.g. CET, GMT+3" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Availability <span class="req">*</span></label>
+                            <select id="availability" required>
+                                <option value="">How often can you work?</option>
+                                <option value="Daily">Daily</option>
+                                <option value="Weekends">Weekends Only</option>
+                                <option value="3-4 times a week">3-4 times a week</option>
+                            </select>
+                        </div>
+
+                        <!-- Customer Agent only -->
+                        <div class="form-group hidden" id="languageGroup">
+                            <label>Which language do you want to support in? <span class="req">*</span></label>
+                            <input type="text" id="supportLanguages" placeholder="e.g. English, Spanish">
+                        </div>
+
+                        <div class="form-group">
+                            <label>A customer is angry about a model. What do you do? <span class="req">*</span></label>
+                            <textarea id="scenarioAnswer" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Why should we hire you? <span class="req">*</span></label>
+                            <textarea id="whyHire" required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn-primary">Submit Application</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOGIN VIEW -->
+        <section id="loginView" class="hidden">
+            <div class="page-container">
+                <div class="login-wrapper">
+                    <div class="login-icon">🔒</div>
+                    <h2>HR Login</h2>
+                    <p class="subtitle">Sign in to access the admin dashboard</p>
+
+                    <div id="loginError" class="alert alert-error hidden">Invalid credentials</div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="hrUser" placeholder="Your username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="hrPass" placeholder="••••••••">
+                    </div>
+
+                    <div class="form-actions" style="flex-direction:column;">
+                        <button class="btn-primary" style="width:100%;" id="loginBtn">Sign In</button>
+                        <button class="btn-secondary" style="width:100%;" id="backHomeBtn">Back to Homepage</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DASHBOARD VIEW -->
+        <section id="dashboardView" class="hidden">
+            <div class="dashboard-page">
+                <header class="dashboard-header">
+                    <div class="logo" id="dashLogoBtn">
+                        <img src="logo.png" alt="CRB" class="logo-icon">
+                        <span class="logo-text">CRB Group — HR Dashboard</span>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="nav-link" id="viewSiteBtn">View Site</button>
+                        <button class="nav-link primary" id="logoutBtn">Log Out</button>
+                    </div>
+                </header>
+
+                <div class="dashboard-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Applications</div>
+                            <div class="stat-value" id="statTotal">—</div>
+                            <div class="stat-sub">All time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Customer Agents</div>
+                            <div class="stat-value" id="statSupport">—</div>
+                            <div class="stat-sub">Applications</div>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h3>Applications</h3>
+                            <div class="toolbar">
+                                <label style="margin:0; font-size:0.85rem; color:#9ca3af;">Filter:</label>
+                                <select id="hrVacancyFilter">
+                                    <option value="All">All Vacancies</option>
+                                    <option value="Customer Agent">Customer Agent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-scroll">
+                            <div id="tableContainer">
+                                <div class="empty-state">
+                                    <div class="icon">📄</div>
+                                    <p>Loading applications...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
+        © 2026 CRB Group. All rights reserved. | Site made by Talbi Systems
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
